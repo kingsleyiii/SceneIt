@@ -19,19 +19,28 @@ function renderMovies(movieArray) {
 document.addEventListener('DOMContentLoaded', function() {
     myForm.addEventListener("submit", e => {
         e.preventDefault();
+        const searchString = document.getElementById('search-bar').value
+        const urlEncodedSearchString = encodeURIComponent(searchString)
+        fetch("http://www.omdbapi.com/?apikey=59354c85&s=" + urlEncodedSearchString)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data)
+                movieContainer.innerHTML = renderMovies(data.Search)
+            })
+
+
         // code here will execute after the document is loaded
-        movieContainer.innerHTML = renderMovies(movieData)
         });
+        document.addEventListener("click", function(e) {
+            if (e.target.classList.contains("add-button")) {
+                movieID = e.target.dataset.imdbid
+                saveToWatchlist(movieID)
+                // console.log(movieID)
+            }
+        })
 
 })
 
-document.addEventListener("click", function(e) {
-    if (e.target.classList.contains("add-button")) {
-        movieID = e.target.dataset.imdbid
-        saveToWatchlist(movieID)
-        // console.log(movieID)
-    }
-})
 
 function saveToWatchlist(movieID) {
     console.log(movieID)

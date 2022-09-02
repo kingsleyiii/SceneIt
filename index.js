@@ -3,6 +3,7 @@ const myForm = document.getElementById("search-form")
 
 
 
+
 function renderMovies(movieArray) {
     // console.log("hello")
     let movieHtmlArray = movieArray.map(currentMovie => {
@@ -22,10 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const searchString = document.getElementById('search-bar').value
         const urlEncodedSearchString = encodeURIComponent(searchString)
         fetch("http://www.omdbapi.com/?apikey=59354c85&s=" + urlEncodedSearchString)
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data)
-                movieContainer.innerHTML = renderMovies(data.Search)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data)
+            movieContainer.innerHTML = renderMovies(data.Search)
+            movieData = data.Search
             })
 
 
